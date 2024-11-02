@@ -41,7 +41,7 @@ export const getCoinNameByTicker = async (ticker: string) => {
     try {
         const data = await fs.promises.readFile(filePath, "utf-8");
         const coins = JSON.parse(data);
-        console.log(coins);
+
         const coin = coins.find(
             (coin: Coin) => coin.symbol.toUpperCase() === ticker.toUpperCase(),
         );

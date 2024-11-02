@@ -17,13 +17,11 @@ export const returnCryptoPrice = async (search: string, option: string) => {
                 query = search.toLowerCase();
             }
             if (!query) return null;
-            const cachedData = await redisClient.get(query); // Check if data is cached
+            const cachedData = await redisClient.get(`crypto_${query}`); // Check if data is cached
             if (cachedData) {
-                console.log("data found in cache");
                 cryptoInfo = JSON.parse(cachedData);
             } else {
                 // No data found in cache
-                console.log("data not found in cache");
                 cryptoInfo = await CoinGeckoClient.coins.fetch(query, {});
 
                 if (cryptoInfo.code === 404) return null;
@@ -42,7 +40,7 @@ export const returnCryptoPrice = async (search: string, option: string) => {
                 };
                 await redisClient.set(
                     // Cache the data
-                    query,
+                    `crypto_${query}`,
                     JSON.stringify(result),
                     { EX: 30 }, // 30 seconds expiry
                 );
@@ -52,9 +50,48 @@ export const returnCryptoPrice = async (search: string, option: string) => {
         } else if (Array.isArray(search)) {
             // When multiple tickers are provided
             cryptoInfo = [];
+            for (const item of search as string) {
+                if (option === "ticker") {
+                    query = await getCoinNameByTicker(item);
+                } else {
+                    query = item.toLowerCase();
+                }
+                if (!query) continue;
+                const cachedData = await redisClient.get(`crypto_${query}`); // Check if data is cached
+
+                if (cachedData) {
+                    cryptoInfo.push(JSON.parse(cachedData));
+                } else {
+                    // No data found in cache
+                    const object = await CoinGeckoClient.coins.fetch(query, {});
+
+                    if (object.code === 404) continue;
+
+                    let result = {
+                        name: object.data.name,
+                        symbol: object.data.symbol,
+                        currency: "USD",
+                        current_price:
+                            object.data.market_data.current_price.usd,
+                        market_cap: object.data.market_data.market_cap.usd,
+                        total_volume:
+                            object.data.market_data.total_volume.usd,
+                        total_supply: object.data.market_data.total_supply,
+                        circulating_supply:
+                            object.data.market_data.circulating_supply,
+                    };
+                    await redisClient.set(
+                        // Cache the data
+                        `crypto_${query}`,
+                        JSON.stringify(result),
+                        { EX: 30 }, // 30 seconds expiry
+                    );
+                    cryptoInfo.push(result);
+                }
+                    
+            }
         }
 
-        // return data.data.market_data.current_price.usd;
         return cryptoInfo;
     } catch (error) {
         throw error;

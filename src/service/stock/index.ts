@@ -16,7 +16,7 @@ export const returnStockPrice = async (search: string, option: string) => {
             }
             if (!query) return null;
 
-            const cachedData = await redisClient.get(query); // Check if data is cached
+            const cachedData = await redisClient.get(`stock_${query}`); // Check if data is cached
             if (cachedData) {
                 stockInfo = JSON.parse(cachedData);
             } else {
@@ -46,7 +46,7 @@ export const returnStockPrice = async (search: string, option: string) => {
                 };
                 await redisClient.set(
                     // Cache the data
-                    query,
+                    `stock_${query}`,
                     JSON.stringify(result),
                     { EX: 30 }, // 30 seconds expiry
                 );
@@ -66,7 +66,7 @@ export const returnStockPrice = async (search: string, option: string) => {
 
                 if (!query) continue; // no ticker found from company name
 
-                const cachedData = await redisClient.get(query); // Check if data is cached
+                const cachedData = await redisClient.get(`stock_${query}`); // Check if data is cached
 
                 if (cachedData) {
                     // Found cache
@@ -100,7 +100,7 @@ export const returnStockPrice = async (search: string, option: string) => {
                     };
                     await redisClient.set(
                         // Cache the data
-                        query,
+                        `stock_${query}`,
                         JSON.stringify(result),
                         { EX: 30 },
                     );
