@@ -39,6 +39,5 @@ The following variables are required to run the program.
 5) Start the app in your terminal: `npm run start`
 
 ## Limitation :warning:
-- Finnhub allows free API calls up to 60 calls per minute
-- CoinGecko allows free API calls up to 30 calls per minute
+- CoinGecko has a rate limit of 5 to 15 calls per minute
 - yfinance does not have strict calls limitation, but very frequent duplicate requests might result in the temporary ban. However, the app implemented caching to prevent this. 
