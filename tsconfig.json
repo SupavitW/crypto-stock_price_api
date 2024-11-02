@@ -1,0 +1,15 @@
+// set up typescript config
+{
+    "compilerOptions": {
+        "module": "CommonJS",
+        "moduleResolution": "node",
+        "baseUrl": "src",
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "strict": true,
+        "esModuleInterop": true,
+        "noImplicitAny": true,
+        "forceConsistentCasingInFileNames": true
+    },
+    "include": ["src/**/*"]
+}
