@@ -1,0 +1,298 @@
+{
+	"info": {
+		"_postman_id": "536c21fc-ec4f-4e77-b1ab-adc3a054f0f8",
+		"name": "crypto-stock_price_checker_api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31568339"
+	},
+	"item": [
+		{
+			"name": "Crypto",
+			"item": [
+				{
+					"name": "single crypto by coin's name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/crypto/getCryptoPrice?option=name&search=bitcoin",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"crypto",
+								"getCryptoPrice"
+							],
+							"query": [
+								{
+									"key": "option",
+									"value": "name"
+								},
+								{
+									"key": "search",
+									"value": "bitcoin"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "multiple cryptos by crypto's name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/crypto/getCryptoPrice?option=name&search[]=ChainLink&search[]=bitcoin&search[]=ethereum&search[]=fakeCoinName",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"crypto",
+								"getCryptoPrice"
+							],
+							"query": [
+								{
+									"key": "option",
+									"value": "name"
+								},
+								{
+									"key": "search[]",
+									"value": "ChainLink"
+								},
+								{
+									"key": "search[]",
+									"value": "bitcoin"
+								},
+								{
+									"key": "search[]",
+									"value": "ethereum"
+								},
+								{
+									"key": "search[]",
+									"value": "fakeCoinName"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "single crypto by ticker",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/crypto/getCryptoPrice?option=ticker&search=BTC",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"crypto",
+								"getCryptoPrice"
+							],
+							"query": [
+								{
+									"key": "option",
+									"value": "ticker"
+								},
+								{
+									"key": "search",
+									"value": "BTC"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "multiple cryptos by tickers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/crypto/getCryptoPrice?option=ticker&search[]=BTC&search[]=ETH&search[]=USDT&search[]=fakeCoinTicker",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"crypto",
+								"getCryptoPrice"
+							],
+							"query": [
+								{
+									"key": "option",
+									"value": "ticker"
+								},
+								{
+									"key": "search[]",
+									"value": "BTC"
+								},
+								{
+									"key": "search[]",
+									"value": "ETH"
+								},
+								{
+									"key": "search[]",
+									"value": "USDT"
+								},
+								{
+									"key": "search[]",
+									"value": "fakeCoinTicker"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Test crypto endpoints"
+		},
+		{
+			"name": "Stock",
+			"item": [
+				{
+					"name": "single stock by ticker",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/stock/getStockPrice?option=ticker&search=META",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"stock",
+								"getStockPrice"
+							],
+							"query": [
+								{
+									"key": "option",
+									"value": "ticker"
+								},
+								{
+									"key": "search",
+									"value": "META"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "multiple stocks by tickers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/stock/getStockPrice?option=ticker&search[]=AAPL&search[]=GOLD&search[]=fakeStockName",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"stock",
+								"getStockPrice"
+							],
+							"query": [
+								{
+									"key": "option",
+									"value": "ticker"
+								},
+								{
+									"key": "search[]",
+									"value": "AAPL"
+								},
+								{
+									"key": "search[]",
+									"value": "GOLD"
+								},
+								{
+									"key": "search[]",
+									"value": "fakeStockName"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "single stock by company name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/stock/getStockPrice?option=company&search=amazon",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"stock",
+								"getStockPrice"
+							],
+							"query": [
+								{
+									"key": "option",
+									"value": "company"
+								},
+								{
+									"key": "search",
+									"value": "amazon"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "multiple stocks by company names",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/stock/getStockPrice?option=company&search[]=amazon&search[]=Microsoft&search[]=facebook&search[]=fakeStockTicker",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"stock",
+								"getStockPrice"
+							],
+							"query": [
+								{
+									"key": "option",
+									"value": "company"
+								},
+								{
+									"key": "search[]",
+									"value": "amazon"
+								},
+								{
+									"key": "search[]",
+									"value": "Microsoft"
+								},
+								{
+									"key": "search[]",
+									"value": "facebook"
+								},
+								{
+									"key": "search[]",
+									"value": "fakeStockTicker"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Test stock endpoints"
+		}
+	]
+}
