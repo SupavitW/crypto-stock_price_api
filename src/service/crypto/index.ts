@@ -22,10 +22,11 @@ export const returnCryptoPrice = async (search: string, option: string) => {
                 cryptoInfo = JSON.parse(cachedData);
             } else {
                 // No data found in cache
-                console.log("query", query);
                 cryptoInfo = await CoinGeckoClient.coins.fetch(query, {});
 
-                if (cryptoInfo.code === 404) return null;
+                if (!cryptoInfo || cryptoInfo.code === 404) return null;
+
+                if (cryptoInfo.code === 429) return "Rate limit exceeded";
 
                 let result = {
                     name: cryptoInfo.data.name,
@@ -65,8 +66,9 @@ export const returnCryptoPrice = async (search: string, option: string) => {
                 } else {
                     // No data found in cache
                     const object = await CoinGeckoClient.coins.fetch(query, {});
+                    if (!object || object.code === 404) continue;
 
-                    if (object.code === 404) continue;
+                    if (object.code === 429) return "Rate limit exceeded";
 
                     let result = {
                         name: object.data.name,

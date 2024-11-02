@@ -38,6 +38,12 @@ export const getCryptoPrice = async (req: Request, res: Response) => {
             });
             return;
         }
+
+        if (cryptoPrice === "Rate limit exceeded") {
+            res.status(429).json({ error: "Rate limit exceeded" });
+            return;
+        }
+
         // Send the current price back in the response
         res.status(200).json(cryptoPrice);
     } catch (error) {
