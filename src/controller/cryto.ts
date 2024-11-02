@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { returnCryptoPrice } from "../service/crypto/";
 
 export const getCryptoPrice = async (req: Request, res: Response) => {
-    const search = req.query.search as string;
+    let search = req.query.search as string;
     const option = req.query.option as string;
     // Check input correctness
     if (!search) {
@@ -24,9 +24,7 @@ export const getCryptoPrice = async (req: Request, res: Response) => {
     }
 
     if (search.includes(" ")) {
-        res.status(400).json({
-            error: "Search input cannot contains white-spaces",
-        });
+        res.status(400).json({ error: "Search input cannot contain spaces" });
         return;
     }
 
@@ -35,8 +33,8 @@ export const getCryptoPrice = async (req: Request, res: Response) => {
         const cryptoPrice = await returnCryptoPrice(search, option);
         // Case when data is not found
         if (!cryptoPrice) {
-            res.status(400).json({
-                error: `No data found for provided ${option}`,
+            res.status(200).json({
+                message: `No data found for provided ${option}`,
             });
             return;
         }

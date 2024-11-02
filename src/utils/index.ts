@@ -1,39 +1,26 @@
-import axios from "axios";
+import yahooFinance from "yahoo-finance2";
 import fs from "fs";
 import path from "path";
 import * as dotenv from "dotenv";
+import { Quote, Coin } from "../types";
 dotenv.config();
-
-const API_KEY = process.env.FINNHUB_API_KEY; // Replace with your actual API key
 
 // Function to get the stock ticker from the company name
 export const getStockTickerFromCompanyName = async (companyName: string) => {
     try {
-        const response = await axios.get(`https://finnhub.io/api/v1/search`, {
-            params: {
-                q: companyName,
-                token: API_KEY,
-            },
-        });
+        const results = await yahooFinance.search(companyName);
 
-        const data = response.data;
-
-        if (data && data.result && data.result.length > 0) {
-            // Extract the first result's symbol
-            return data.result[0].symbol;
+        if (results.quotes.length === 0) {
+            return null;
         } else {
-            return null; // No match found
+            const bestMatch = results.quotes[0] as Quote; // Type assertion to avoid TS error
+            return bestMatch.symbol;
         }
     } catch (error) {
         console.error("Error fetching ticker:", error);
         return null;
     }
 };
-
-interface Coin {
-    name: string;
-    symbol: string;
-}
 
 // Function to get the name of the cryptocurrency by ticker symbol
 export const getCoinNameByTicker = async (ticker: string) => {

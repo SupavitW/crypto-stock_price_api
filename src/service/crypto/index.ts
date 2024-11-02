@@ -22,6 +22,7 @@ export const returnCryptoPrice = async (search: string, option: string) => {
                 cryptoInfo = JSON.parse(cachedData);
             } else {
                 // No data found in cache
+                console.log("query", query);
                 cryptoInfo = await CoinGeckoClient.coins.fetch(query, {});
 
                 if (cryptoInfo.code === 404) return null;
@@ -74,8 +75,7 @@ export const returnCryptoPrice = async (search: string, option: string) => {
                         current_price:
                             object.data.market_data.current_price.usd,
                         market_cap: object.data.market_data.market_cap.usd,
-                        total_volume:
-                            object.data.market_data.total_volume.usd,
+                        total_volume: object.data.market_data.total_volume.usd,
                         total_supply: object.data.market_data.total_supply,
                         circulating_supply:
                             object.data.market_data.circulating_supply,
@@ -88,8 +88,8 @@ export const returnCryptoPrice = async (search: string, option: string) => {
                     );
                     cryptoInfo.push(result);
                 }
-                    
             }
+            if (cryptoInfo.length === 0) return null;
         }
 
         return cryptoInfo;
